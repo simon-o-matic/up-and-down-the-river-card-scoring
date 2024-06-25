@@ -1,5 +1,8 @@
 "use client";
 
+import React from "react";
+import { useRouter } from "next/navigation";
+
 import { useGameState, Player } from "../gameState";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +12,6 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import React from "react";
 
 const PlayerView = ({
     key,
@@ -31,6 +33,7 @@ export default function PlayersList() {
 
     const [open, setOpen] = React.useState(false);
     const [currentName, setCurrentName] = React.useState("");
+    const router = useRouter();
 
     const addPlayer = (name: string) => {
         setOpen(false);
@@ -66,7 +69,7 @@ export default function PlayersList() {
     };
 
     const startFirstRound = () => {
-        alert("starting the first round now");
+        router.push("/bid");
     };
 
     return (

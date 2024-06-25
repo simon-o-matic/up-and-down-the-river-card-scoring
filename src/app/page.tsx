@@ -2,31 +2,83 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import { Player, useGameState } from "./gameState";
+import { useState } from "react";
+
+const addEmptyRoundsToPlayers = (players: Player[], hands: number) => {
+    players.map(player => {
+        const emptyBids = [];
+        for (let i = 0; i < hands; i++) {
+            emptyBids.push({ bid: 0, won: 0 });
+        }
+
+        player.roundScores = emptyBids;
+    });
+
+    console.log("Just hadded empty hands to players", players);
+
+    return players;
+};
 
 export default function Home() {
     const router = useRouter();
+    const gameState = useGameState();
 
-    /** No need to do anything else here */
+    const [handsUpRiver, setHandsUpRiver] = useState("6");
+
+    /** Check that number of hands is somewhat reasonable */
     const startNewGame = () => {
-        router.push("/players");
+        const hands = Number(handsUpRiver);
+
+        if (!isNaN(hands) && hands > 0 && hands < 52) {
+            gameState.setHandsUpRiver(hands);
+
+            // create empty player roundsScores (bids and wons)
+            gameState.updatePlayers(
+                addEmptyRoundsToPlayers(gameState.players, hands * 2)
+            );
+
+            router.push("/players");
+        } else {
+            alert(
+                "Thats not a reasonable number of hands up the river to play. Try again."
+            );
+        }
     };
 
     return (
-        <div className="flex h-96 w-1/2 p-4 justify-between align-middle  flex-col bg-red-400">
+        <div className="flex flex-col h-full w-full justify-between align-middle  bg-red-400">
             <div>
                 <h4>Welcome to...</h4>
             </div>
-            <div>
-                <h1 className="text-3xl">
-                    Up And Down The River Card Game Scoring System
-                </h1>
+            <div className=" h-36">
+                <h1 className="text-3xl">Up And Down The River</h1>
+                <h1 className="text-xl">Card Game Scoring App</h1>
             </div>
-            <Button
-                onClick={startNewGame}
-                className=" flex w-52 clear-right h-12 text-lg hover:bg-sky-400 cursor-pointer items-center justify-center rounded border red"
-            >
-                START NEW GAME
-            </Button>
+            <div className="grid grid-rows-2 grid-cols-1 items-center  bg-blue-600">
+                <Label htmlFor="width">
+                    How many hands up the river do you want?
+                </Label>
+                <div className="flex flex-row justify-between flex-nowrap ">
+                    <Input
+                        id="width"
+                        defaultValue="6"
+                        className="col-span-2 h-10 w-1/3 mr-3"
+                        onChangeCapture={e => {
+                            setHandsUpRiver(e.currentTarget.value);
+                        }}
+                    />
+                    <Button
+                        onClick={startNewGame}
+                        className="h-10 w-2/3 hover:bg-sky-400 "
+                    >
+                        Start Game
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 }
