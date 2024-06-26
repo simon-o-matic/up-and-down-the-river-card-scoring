@@ -15,8 +15,12 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
+/** how many cards are dealt this hand - calculated once */
+let cardsThisHand = 0;
+
 /**
  * The bidding phase must be compled in order, and the last bidder has restrictions.
+ * The last bidder is always the dealer! How convenient.
  *
  * Actions:
  *      up a bid
@@ -26,8 +30,7 @@ export default function Bidding() {
     const gameState = useGameState();
     const router = useRouter();
 
-    const changeBid = useGameState().changeBid;
-
+    console.log("GAME STATE", gameState);
     /**
      * Index of the player who's edit box is active for the bidding. Needs to be
      * done in order and the last one has rules.
@@ -39,17 +42,11 @@ export default function Bidding() {
     const [dealerIndex, setDealerIndex] = React.useState(0);
 
     const upBid = () => {
-        console.log(
-            "Round scores upbid: ",
-            gameState.players[currentBidderPlayerIndex].roundScores
-        );
-
         const currentBid =
             gameState.players[currentBidderPlayerIndex].roundScores[
                 gameState.hand
             ].bid;
 
-        console.log("About to upbid: ", currentBid);
         gameState.changeBid(
             gameState.hand,
             currentBidderPlayerIndex,
@@ -63,7 +60,6 @@ export default function Bidding() {
                 gameState.hand
             ].bid;
 
-        console.log("About to downBid: ", currentBid);
         if (currentBid > 0) {
             gameState.changeBid(
                 gameState.hand,
@@ -73,18 +69,24 @@ export default function Bidding() {
         }
     };
 
-    const submitBid = () => {
-        // can't submit for its set. Shouldn't even happen, but whatever.
-        console.log("submitting bid for ", currentBidderPlayerIndex);
-        if (currentBidderPlayerIndex === -1) return;
+    const submitBid = (isFinal: boolean = false) => {
+        // // can't submit for its set. Shouldn't even happen, but whatever.
+        // console.log("submitting bid for ", currentBidderPlayerIndex);
+        // if (currentBidderPlayerIndex === -1) return;
 
         // move to the next player to bid
         setCurrentBidderPlayerIndex(
             (currentBidderPlayerIndex + 1) % gameState.players.length
         );
+
+        if (isFinal) {
+            alert("Play The Hand Now");
+            router.push("/wins");
+        }
     };
 
     // TODO: which bid are we not allowed?
+
     /**
      * Work out at the start who the dealer is for this round. Because
      * the next person is the first bidder.
@@ -93,7 +95,13 @@ export default function Bidding() {
         // only do this first time in.
         if (currentBidderPlayerIndex !== -1) return;
 
-        console.log("Setting initial dealer and first bidder");
+        cardsThisHand =
+            gameState.hand + 1 > gameState.handsUpRiver
+                ? gameState.handsUpRiver -
+                  (gameState.hand + 1 - gameState.handsUpRiver)
+                : gameState.hand + 1;
+
+        console.log("Cards this hand?", cardsThisHand);
 
         // dealer for this hand depends on the hand number.
         const dealerIndex = gameState.hand % gameState.players.length;
@@ -104,40 +112,59 @@ export default function Bidding() {
             (dealerIndex + 1) % gameState.players.length
         );
         console.log("Dealer is...", dealerIndex);
-    }, [gameState.hand, gameState.players.length, currentBidderPlayerIndex]);
+    }, [
+        gameState.hand,
+        gameState.players.length,
+        currentBidderPlayerIndex,
+        gameState.handsUpRiver,
+    ]);
+
+    if (gameState.handsUpRiver === 0) {
+        // game reset, go back to the start
+        router.push("/");
+        return;
+    }
 
     return (
-        <div className="flex flex-col bg-red-400">
-            <div className="text-3xl">
-                Round {gameState.hand}. Cards To Deal: {4}.
+        <div className="flex flex-col w-full">
+            <div className="flex w-full justify-between text-2xl mb-3 ">
+                <div>Hand: {gameState.hand + 1} </div>
+                <div>Cards To Deal: {cardsThisHand}</div>
             </div>
-            <div className="text-2xl">Enter player bids</div>
+            <div className="flex w-full justify-center text-4xl mb-3">
+                Enter Player Bids
+            </div>
 
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap w-full  justify-center">
                 {gameState.players.map((player, playerIndex) => (
                     <Card
                         key={player.id}
-                        className="w-[250px]  ml-2 mr-2 bg-purple-300"
+                        className={`w-min-[390px] [w-max-[400px] ${
+                            playerIndex === currentBidderPlayerIndex
+                                ? "border-blue-700 border-4"
+                                : "border-slate-900 border-2"
+                        }  m-2`}
                     >
                         <CardHeader>
-                            <CardTitle>{player.name}</CardTitle>
+                            <CardTitle className="text-2xl">
+                                {player.name}{" "}
+                                {playerIndex === dealerIndex ? "(dealer)" : ""}
+                            </CardTitle>
                             <CardDescription>
                                 How many hands does this player think they can
                                 win?
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex flex-row  w-full bg-purple-400 justify-evenly">
-                                <div className="flex flex-col w-1/2 border-2 rounded align-bottom justify-center text-6xl bg-red-600">
-                                    {gameState.players[playerIndex].roundScores[
-                                        gameState.hand
-                                    ] !== undefined
-                                        ? gameState.players[playerIndex]
-                                              .roundScores[gameState.hand].bid
-                                        : 0}
+                            <div className="flex flex-row  w-full  justify-between">
+                                <div className="flex flex-col w-1/2 border-2 rounded-lg  justify-center text-6xl ">
+                                    {
+                                        gameState.players[playerIndex]
+                                            .roundScores[gameState.hand].bid
+                                    }
                                 </div>
 
-                                <div className="flex w-1/3 flex-col  bg-yellow-500">
+                                <div className="flex w-1/3 flex-col ">
                                     <Button
                                         onClick={
                                             playerIndex ==
@@ -145,7 +172,12 @@ export default function Bidding() {
                                                 ? upBid
                                                 : undefined
                                         }
-                                        className="bg-gray-400 h-12 mb-1 border"
+                                        className={`h-12 mb-1 border ${
+                                            playerIndex ===
+                                            currentBidderPlayerIndex
+                                                ? "bg-blue-400"
+                                                : "bg-gray-300"
+                                        }`}
                                     >
                                         up
                                     </Button>
@@ -156,25 +188,40 @@ export default function Bidding() {
                                                 ? downBid
                                                 : undefined
                                         }
-                                        className="bg-gray-400 h-12 mt-1 border"
+                                        className={`h-12 mt-1 border ${
+                                            playerIndex ===
+                                            currentBidderPlayerIndex
+                                                ? "bg-blue-400"
+                                                : "bg-gray-300"
+                                        }`}
                                     >
-                                        dn
+                                        down
                                     </Button>
                                 </div>
                             </div>
                         </CardContent>
-                        {playerIndex == currentBidderPlayerIndex ? (
-                            <CardFooter className="flex justify-between">
-                                <Button onClick={submitBid}>Submit</Button>
-                            </CardFooter>
-                        ) : (
-                            <div>no submit</div>
-                        )}
+                        <CardFooter className="flex justify-right">
+                            {playerIndex == currentBidderPlayerIndex ? (
+                                <Button
+                                    onClick={() =>
+                                        submitBid(playerIndex === dealerIndex)
+                                    }
+                                >
+                                    {playerIndex === dealerIndex ? (
+                                        <div className="font-bold text-blue-700">
+                                            Submit Final Bid
+                                        </div>
+                                    ) : (
+                                        "Submit Bid"
+                                    )}
+                                </Button>
+                            ) : (
+                                <Button className="italic">Wait turn</Button>
+                            )}
+                        </CardFooter>
                     </Card>
                 ))}
             </div>
-
-            <Button>Start Next Round</Button>
         </div>
     );
 }

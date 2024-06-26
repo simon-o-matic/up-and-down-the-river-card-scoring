@@ -8,21 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Player, useGameState } from "./gameState";
 import { useState } from "react";
 
-const addEmptyRoundsToPlayers = (players: Player[], hands: number) => {
-    players.map(player => {
-        const emptyBids = [];
-        for (let i = 0; i < hands; i++) {
-            emptyBids.push({ bid: 0, won: 0 });
-        }
-
-        player.roundScores = emptyBids;
-    });
-
-    console.log("Just hadded empty hands to players", players);
-
-    return players;
-};
-
 export default function Home() {
     const router = useRouter();
     const gameState = useGameState();
@@ -36,11 +21,6 @@ export default function Home() {
         if (!isNaN(hands) && hands > 0 && hands < 52) {
             gameState.setHandsUpRiver(hands);
 
-            // create empty player roundsScores (bids and wons)
-            gameState.updatePlayers(
-                addEmptyRoundsToPlayers(gameState.players, hands * 2)
-            );
-
             router.push("/players");
         } else {
             alert(
@@ -50,7 +30,7 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col h-full w-full justify-between align-middle  bg-red-400">
+        <div className="flex flex-col h-full w-full justify-between align-middle  ">
             <div>
                 <h4>Welcome to...</h4>
             </div>
@@ -58,7 +38,7 @@ export default function Home() {
                 <h1 className="text-3xl">Up And Down The River</h1>
                 <h1 className="text-xl">Card Game Scoring App</h1>
             </div>
-            <div className="grid grid-rows-2 grid-cols-1 items-center  bg-blue-600">
+            <div className="grid grid-rows-2 grid-cols-1 items-center  ">
                 <Label htmlFor="width">
                     How many hands up the river do you want?
                 </Label>

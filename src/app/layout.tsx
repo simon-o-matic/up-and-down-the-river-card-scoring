@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className} className="flex bg-green-500 m-5">
+            <body className={inter.className} className="flex  m-5">
                 {children}
             </body>
         </html>

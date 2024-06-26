@@ -40,14 +40,14 @@ type GameState = {
 
 export const useGameState = create<GameState>(set => ({
     players: initialPlayers,
-    hand: 0,
+    hand: 6,
     handsUpRiver: 0,
     stage: "pre-game",
 
     updatePlayers: (players: Player[]) =>
         set(state => ({
             ...state,
-            players: (state.players = players),
+            players: players,
         })),
 
     setHandsUpRiver: (hands: number) =>

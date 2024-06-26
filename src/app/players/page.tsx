@@ -68,43 +68,59 @@ export default function PlayersList() {
         console.log(gameState.players);
     };
 
+    const addEmptyRoundsToPlayers = (players: Player[], hands: number) =>
+        players.map(player => {
+            const emptyBids = [];
+            for (let i = 0; i < hands; i++) {
+                emptyBids.push({ bid: 0, won: 0 });
+            }
+
+            player.roundScores = emptyBids;
+
+            return { ...player };
+        });
+
     const startFirstRound = () => {
+        // create empty player roundsScores (bids and wons) for all players
+        gameState.updatePlayers(
+            addEmptyRoundsToPlayers(
+                gameState.players,
+                gameState.handsUpRiver * 2
+            )
+        );
+
         router.push("/bid");
     };
 
     return (
-        <div className="h-full">
-            <div className="bg-blue-500">Players List </div>
+        <div className="flex flex-col w-full h-full">
+            <div className="flex h-full justify-center text-3xl mb-3">
+                Players List
+            </div>
             <hr></hr>
 
             {gameState.players.map(p => (
-                <PlayerView
-                    onClick={() => movePlayerUp(p.id)}
+                <div
+                    className="flex flex-row w-full justify-between"
                     key={p.id}
-                    name={p.name}
-                ></PlayerView>
+                >
+                    Player name: {p.name}{" "}
+                    <Button onClick={() => movePlayerUp(p.id)}>↑</Button>
+                </div>
             ))}
 
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button variant="outline">Add Player</Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-80">
+                <PopoverContent className="w-80 bg-blue-300">
                     <div className="grid gap-4">
-                        <div className="space-y-2">
-                            <h4 className="font-medium leading-none">
-                                Dimensions
-                            </h4>
-                            <p className="text-sm text-muted-foreground">
-                                Set the dimensions for the layer.
-                            </p>
-                        </div>
                         <div className="grid gap-2">
                             <div className="grid grid-cols-3 items-center gap-4">
                                 <Label htmlFor="width">Player Name</Label>
                                 <Input
                                     id="width"
-                                    defaultValue="johnny"
+                                    defaultValue=""
                                     className="col-span-2 h-8"
                                     onChangeCapture={e => {
                                         setCurrentName(e.currentTarget.value);
@@ -114,7 +130,10 @@ export default function PlayersList() {
                                     }}
                                 />
                             </div>
-                            <Button onClick={() => addPlayer(currentName)}>
+                            <Button
+                                className="bg-gray-500"
+                                onClick={() => addPlayer(currentName)}
+                            >
                                 Submit
                             </Button>
                         </div>
