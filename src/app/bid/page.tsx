@@ -30,7 +30,6 @@ export default function Bidding() {
     const gameState = useGameState();
     const router = useRouter();
 
-    //    console.log("GAME STATE", gameState);
     /**
      * Index of the player who's edit box is active for the bidding. Needs to be
      * done in order and the last one has rules.
@@ -77,7 +76,7 @@ export default function Bidding() {
 
         if (isFinal) {
             alert("Play The Hand Now");
-            router.push("/win");
+            router.replace("/win");
         }
     };
 
@@ -114,7 +113,7 @@ export default function Bidding() {
 
     if (gameState.handsUpRiver === 0) {
         // game reset, go back to the start
-        router.push("/");
+        router.replace("/");
         return;
     }
 

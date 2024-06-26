@@ -80,7 +80,7 @@ export default function PlayersList() {
             )
         );
 
-        router.push("/bid");
+        router.replace("/bid");
     };
 
     return (
@@ -115,9 +115,6 @@ export default function PlayersList() {
                                     className="col-span-2 h-8"
                                     onChangeCapture={e => {
                                         setCurrentName(e.currentTarget.value);
-                                        console.log(
-                                            "current: " + e.currentTarget.value
-                                        );
                                     }}
                                 />
                             </div>

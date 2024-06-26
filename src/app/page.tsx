@@ -21,7 +21,7 @@ export default function Home() {
         if (!isNaN(hands) && hands > 0 && hands < 52) {
             gameState.setHandsUpRiver(hands);
 
-            router.push("/players");
+            router.replace("/players");
         } else {
             alert(
                 "Thats not a reasonable number of hands up the river to play. Try again."

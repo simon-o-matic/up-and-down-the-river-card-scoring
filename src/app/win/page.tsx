@@ -1,10 +1,10 @@
 // A game in progress page
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 
-import { useGameState, Player } from "../gameState";
+import { useGameState } from "../gameState";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -27,10 +27,16 @@ export default function Winning() {
     const gameState = useGameState();
     const router = useRouter();
 
-    const nextHand = () => {
-        gameState.nextHand();
+    const isLastHand = () =>
+        gameState.hand + 1 === gameState.handsUpRiver * 2 - 1;
 
-        router.push("/bid");
+    const nextHand = () => {
+        if (isLastHand()) {
+            router.replace("/winners");
+        } else {
+            gameState.nextHand();
+            router.replace("/bid");
+        }
     };
 
     const cardsThisHand =
@@ -55,17 +61,17 @@ export default function Winning() {
         gameState.changeWon(gameState.hand, playerIndex, won - 1);
     };
 
-    const playerTotalScore = (playerIndex: number) => {
+    // TODO MOVE TO SHARED UTIL
+    const calculatePlayerTotalScoreSoFar = (playerIndex: number) => {
         let total = 0;
 
         for (let h = 0; h <= gameState.hand; h++) {
             const playerBidWon = gameState.players[playerIndex].roundScores[h];
-            console.log("BID WON", h, playerBidWon);
+
             if (playerBidWon.bid === playerBidWon.won) {
                 if (playerBidWon.bid === 0) {
                     total += gameState.config.pointsForCorrectZeroBid;
                 } else {
-                    console.log("adding 10");
                     total += gameState.config.pointsForCorrectNonZeroBid;
                 }
             }
@@ -73,23 +79,12 @@ export default function Winning() {
             total += playerBidWon.won;
         }
 
-        console.log("BidWon final total =", total);
         return total;
     };
 
-    /*
-        gameState.players[playerIndex].roundScores.reduce((acc, cur) => {
-            return acc + cur.bid === cur.won
-                ? cur.bid === 0
-                    ? gameState.config.pointsForCorrectZeroBid
-                    : gameState.config.pointsForCorrectNonZeroBid
-                : 0 + cur.won;
-        }, 0);
-    */
-
     // game reset, go back to the start
     if (gameState.handsUpRiver === 0) {
-        router.push("/");
+        router.replace("/");
         return;
     }
 
@@ -143,16 +138,17 @@ export default function Winning() {
                                 </div>
                             </div>
                             <div>
-                                TOTAL SCORE: {playerTotalScore(playerIndex)}
+                                TOTAL SCORE:{" "}
+                                {calculatePlayerTotalScoreSoFar(playerIndex)}
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-right"></CardFooter>
                     </Card>
                 ))}
             </div>
-            {/* highligh button when all the scores have been clicked? */}
+
             <Button onClick={nextHand} className="max-w-64">
-                Start Next Hand
+                {isLastHand() ? "View Final Scores" : "Start Next Hand"}
             </Button>
         </div>
     );

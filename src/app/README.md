@@ -19,6 +19,9 @@ Dealer always starts with the first player and rotates
 -   Bid page. "wait turn" after bidding should be "done"
 -   create an EDIT page to fix past scores
 -   winning page: flash clicked button red if not valid to click it (max points given out)
+-   github and vercel publish
+-   top level menu with naviation (cancel game, edit scores,)
+-   remove player
 
 # Future idea
 
