@@ -47,13 +47,6 @@ export default function PlayersList() {
             p => p.id === playerId
         );
 
-        console.log(
-            "moving player up " +
-                playerId +
-                " from index " +
-                currentIndexOfPlayer
-        );
-
         const currentPlayer = gameState.players[currentIndexOfPlayer];
 
         // Add the same player in the new spot
@@ -64,8 +57,6 @@ export default function PlayersList() {
 
         // update the game state
         updatePlayers(gameState.players);
-
-        console.log(gameState.players);
     };
 
     const addEmptyRoundsToPlayers = (players: Player[], hands: number) =>

@@ -30,7 +30,7 @@ export default function Bidding() {
     const gameState = useGameState();
     const router = useRouter();
 
-    console.log("GAME STATE", gameState);
+    //    console.log("GAME STATE", gameState);
     /**
      * Index of the player who's edit box is active for the bidding. Needs to be
      * done in order and the last one has rules.
@@ -70,10 +70,6 @@ export default function Bidding() {
     };
 
     const submitBid = (isFinal: boolean = false) => {
-        // // can't submit for its set. Shouldn't even happen, but whatever.
-        // console.log("submitting bid for ", currentBidderPlayerIndex);
-        // if (currentBidderPlayerIndex === -1) return;
-
         // move to the next player to bid
         setCurrentBidderPlayerIndex(
             (currentBidderPlayerIndex + 1) % gameState.players.length
@@ -81,7 +77,7 @@ export default function Bidding() {
 
         if (isFinal) {
             alert("Play The Hand Now");
-            router.push("/wins");
+            router.push("/win");
         }
     };
 
@@ -101,8 +97,6 @@ export default function Bidding() {
                   (gameState.hand + 1 - gameState.handsUpRiver)
                 : gameState.hand + 1;
 
-        console.log("Cards this hand?", cardsThisHand);
-
         // dealer for this hand depends on the hand number.
         const dealerIndex = gameState.hand % gameState.players.length;
         setDealerIndex(dealerIndex);
@@ -111,7 +105,6 @@ export default function Bidding() {
         setCurrentBidderPlayerIndex(
             (dealerIndex + 1) % gameState.players.length
         );
-        console.log("Dealer is...", dealerIndex);
     }, [
         gameState.hand,
         gameState.players.length,
@@ -151,7 +144,7 @@ export default function Bidding() {
                                 {playerIndex === dealerIndex ? "(dealer)" : ""}
                             </CardTitle>
                             <CardDescription>
-                                How many hands does this player think they can
+                                How many tricks does this player think they can
                                 win?
                             </CardDescription>
                         </CardHeader>

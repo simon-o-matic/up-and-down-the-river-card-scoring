@@ -32,17 +32,27 @@ type GameState = {
     hand: number;
     handsUpRiver: number;
     stage: string; // enum: "pre-game", "playing", "finished", "mid-round", "round-complete"
+    config: {
+        pointsForCorrectZeroBid: number;
+        pointsForCorrectNonZeroBid: number;
+    };
 
     updatePlayers: (players: Player[]) => void;
     setHandsUpRiver: (hands: number) => void;
     changeBid: (hand: number, playerIndex: number, bid: number) => void;
+    changeWon: (hand: number, playerIndex: number, won: number) => void;
+    nextHand: () => void;
 };
 
 export const useGameState = create<GameState>(set => ({
     players: initialPlayers,
-    hand: 6,
+    hand: 0,
     handsUpRiver: 0,
     stage: "pre-game",
+    config: {
+        pointsForCorrectZeroBid: 5,
+        pointsForCorrectNonZeroBid: 10,
+    },
 
     updatePlayers: (players: Player[]) =>
         set(state => ({
@@ -66,6 +76,23 @@ export const useGameState = create<GameState>(set => ({
             return {
                 ...state,
             };
+        }),
+
+    changeWon: (hand: number, playerIndex: number, won: number) =>
+        set(state => {
+            /** the array of hands they have played and their bid/win for each */
+            state.players[playerIndex].roundScores[hand].won = won;
+
+            // make a copy of the state so its considered new
+            return {
+                ...state,
+            };
+        }),
+
+    nextHand: () =>
+        set(state => {
+            state.hand++;
+            return { ...state };
         }),
 
     // nextRound - adds one to the round number
