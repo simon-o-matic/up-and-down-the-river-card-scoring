@@ -22,8 +22,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={cn(inter.className, "flex m-5 h-full")}>
-                {children}
+            <body className={cn(inter.className, "flex justify-center ")}>
+                <div className="m-5 p-3 w-full h-full border-black border-2 rounded-md">
+                    {children}
+                </div>
             </body>
         </html>
     );

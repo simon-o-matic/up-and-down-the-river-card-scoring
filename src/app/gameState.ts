@@ -36,7 +36,7 @@ type GameState = {
 export const useGameState = create<GameState>(set => ({
     players: initialPlayers,
     hand: 0,
-    handsUpRiver: 0,
+    handsUpRiver: 7,
     stage: "pre-game", // default.
     config: {
         pointsForCorrectZeroBid: 5,
