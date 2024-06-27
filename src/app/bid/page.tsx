@@ -75,7 +75,6 @@ export default function Bidding() {
         );
 
         if (isFinal) {
-            alert("Play The Hand Now");
             router.replace("/win");
         }
     };

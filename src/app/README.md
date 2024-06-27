@@ -22,6 +22,7 @@ Dealer always starts with the first player and rotates
 -   github and vercel publish
 -   top level menu with naviation (cancel game, edit scores,)
 -   remove player
+-   can't play with only one player
 
 # Future idea
 
