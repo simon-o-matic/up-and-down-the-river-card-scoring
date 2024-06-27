@@ -23,9 +23,7 @@ export default function Home() {
 
             router.replace("/players");
         } else {
-            alert(
-                "Thats not a reasonable number of hands up the river to play. Try again."
-            );
+            alert("Thats not a reasonable number of hands to play. Try again.");
         }
     };
 

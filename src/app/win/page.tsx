@@ -32,7 +32,7 @@ export default function Winning() {
 
     const nextHand = () => {
         if (isLastHand()) {
-            router.replace("/winners");
+            router.replace("/gameover");
         } else {
             gameState.nextHand();
             router.replace("/bid");
@@ -61,7 +61,6 @@ export default function Winning() {
         gameState.changeWon(gameState.hand, playerIndex, won - 1);
     };
 
-    // TODO MOVE TO SHARED UTIL
     const calculatePlayerTotalScoreSoFar = (playerIndex: number) => {
         let total = 0;
 
@@ -91,7 +90,10 @@ export default function Winning() {
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full justify-between text-2xl mb-3 ">
-                <div>Hand: {gameState.hand + 1} </div>
+                <div>
+                    Hand: {gameState.hand + 1} /{" "}
+                    {gameState.handsUpRiver * 2 - 1}
+                </div>
                 <div>Cards Dealt: {cardsThisHand}</div>
             </div>
             <div className="flex w-full justify-center text-4xl mb-3">

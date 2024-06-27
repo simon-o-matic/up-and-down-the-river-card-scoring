@@ -120,7 +120,10 @@ export default function Bidding() {
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full justify-between text-2xl mb-3 ">
-                <div>Hand: {gameState.hand + 1} </div>
+                <div>
+                    Hand: {gameState.hand + 1} /{" "}
+                    {gameState.handsUpRiver * 2 - 1}
+                </div>
                 <div>Cards To Deal: {cardsThisHand}</div>
             </div>
             <div className="flex w-full justify-center text-4xl mb-3">

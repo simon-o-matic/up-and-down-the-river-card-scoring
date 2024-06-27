@@ -13,30 +13,19 @@ export type Player = {
     roundScores: PlayerRoundScore[];
 };
 
-// TEST DATA
-const initialPlayers: Player[] = [
-    {
-        id: "jk4j65",
-        name: "suzy q",
-        roundScores: [],
-    },
-    {
-        id: "wkhu34r",
-        name: "mike w",
-        roundScores: [],
-    },
-];
+const initialPlayers: Player[] = [];
 
 type GameState = {
     players: Player[];
     hand: number;
     handsUpRiver: number;
-    stage: string; // enum: "pre-game", "playing", "finished", "mid-round", "round-complete"
+    stage: string; // enum: "pre-game" or "playing"
     config: {
         pointsForCorrectZeroBid: number;
         pointsForCorrectNonZeroBid: number;
     };
 
+    setStage: (stage: string) => void;
     updatePlayers: (players: Player[]) => void;
     setHandsUpRiver: (hands: number) => void;
     changeBid: (hand: number, playerIndex: number, bid: number) => void;
@@ -48,10 +37,17 @@ export const useGameState = create<GameState>(set => ({
     players: initialPlayers,
     hand: 0,
     handsUpRiver: 0,
-    stage: "pre-game",
+    stage: "pre-game", // default.
     config: {
         pointsForCorrectZeroBid: 5,
         pointsForCorrectNonZeroBid: 10,
+    },
+
+    setStage: (stage: string) => {
+        set(state => ({
+            ...state,
+            stage,
+        }));
     },
 
     updatePlayers: (players: Player[]) =>

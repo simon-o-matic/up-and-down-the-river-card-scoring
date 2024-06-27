@@ -13,23 +13,8 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-const PlayerView = ({
-    key,
-    name,
-    onClick,
-}: {
-    key: string;
-    name: string;
-    onClick: () => void;
-}) => (
-    <li key={key}>
-        Player name: {name} <Button onClick={onClick}>↑</Button>
-    </li>
-);
-
 export default function PlayersList() {
     const gameState = useGameState();
-    const updatePlayers = useGameState().updatePlayers;
 
     const [open, setOpen] = React.useState(false);
     const [currentName, setCurrentName] = React.useState("");
@@ -39,7 +24,7 @@ export default function PlayersList() {
         setOpen(false);
         const newPlayer: Player = { name, id: name, roundScores: [] };
         gameState.players.push(newPlayer);
-        updatePlayers(gameState.players);
+        gameState.updatePlayers(gameState.players);
     };
 
     const movePlayerUp = (playerId: string) => {
@@ -56,7 +41,7 @@ export default function PlayersList() {
         gameState.players.splice(currentIndexOfPlayer + 1, 1);
 
         // update the game state
-        updatePlayers(gameState.players);
+        gameState.updatePlayers(gameState.players);
     };
 
     const addEmptyRoundsToPlayers = (players: Player[], hands: number) =>
@@ -80,6 +65,7 @@ export default function PlayersList() {
             )
         );
 
+        gameState.setStage("playing");
         router.replace("/bid");
     };
 
