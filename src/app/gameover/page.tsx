@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { useGameState, Player } from "../gameState";
 import { Button } from "@/components/ui/button";
-import { toPosition } from "@/lib/utils";
+import { calculatePlayerTotalScoreSoFar, toPosition } from "@/lib/utils";
 
 /** how many cards are dealt this hand - calculated once */
 let cardsThisHand = 0;
@@ -22,27 +22,6 @@ let cardsThisHand = 0;
 export default function GameOver() {
     const gameState = useGameState();
     const router = useRouter();
-
-    // WARNING WARNING WARNING CUT AND PASTE
-    const calculatePlayerTotalScoreSoFar = (playerIndex: number) => {
-        let total = 0;
-
-        for (let h = 0; h <= gameState.hand; h++) {
-            const playerBidWon = gameState.players[playerIndex].roundScores[h];
-
-            if (playerBidWon.bid === playerBidWon.won) {
-                if (playerBidWon.bid === 0) {
-                    total += gameState.config.pointsForCorrectZeroBid;
-                } else {
-                    total += gameState.config.pointsForCorrectNonZeroBid;
-                }
-            }
-
-            total += playerBidWon.won;
-        }
-
-        return total;
-    };
 
     if (gameState.stage === "pre-game") {
         router.replace("/");
@@ -67,12 +46,14 @@ export default function GameOver() {
                                 calculatePlayerTotalScoreSoFar(
                                     gameState.players.findIndex(
                                         p => p.id === b.id
-                                    )
+                                    ),
+                                    gameState
                                 ) -
                                 calculatePlayerTotalScoreSoFar(
                                     gameState.players.findIndex(
                                         p => p.id == a.id
-                                    )
+                                    ),
+                                    gameState
                                 )
                         )
                         .map((player, i) => (

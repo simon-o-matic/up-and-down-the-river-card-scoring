@@ -10,6 +10,15 @@ export function toPosition(pos: number) {
     return pos === 1 ? "st" : pos === 2 ? "nd" : pos === 3 ? "rd" : "th";
 }
 
+/**
+ * Don't need latest hand on bidding page, because we haven't yet recorded any wins for the
+ * current hand.
+ *
+ * @param playerIndex
+ * @param gameState
+ * @param includeLatestHand
+ * @returns
+ */
 export const calculatePlayerTotalScoreSoFar = (
     playerIndex: number,
     gameState: GameState,
