@@ -142,7 +142,7 @@ export default function Home() {
 
             {gameState.players.map((p, i) => (
                 <div key={p.id}>
-                    <div className="flex flex-row  justify-between  my-1 ">
+                    <div className="flex flex-row justify-between my-1 ">
                         <div className="flex flex-row align-text-bottom">
                             <div className="flex align-bottom"></div>
                             <div>
@@ -157,7 +157,7 @@ export default function Home() {
                                 />
                             </div>
                         </div>
-                        <div className="ml-3">
+                        <div className="flex ml-3 flex-nowrap">
                             <Button
                                 className=""
                                 onClick={() => movePlayerUp(p.id)}
