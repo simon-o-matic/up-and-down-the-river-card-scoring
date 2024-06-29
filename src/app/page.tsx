@@ -138,13 +138,13 @@ export default function Home() {
 
             {gameState.players.map((p, i) => (
                 <div key={p.id}>
-                    <div className="flex flex-row  justify-between align-center my-1">
+                    <div className="flex flex-row  justify-between  my-1 ">
                         <div className="flex flex-row align-text-bottom">
                             <div className="flex align-bottom"></div>
                             <div>
                                 <Input
                                     id={String(i)}
-                                    className="w-60"
+                                    className="max-w-60"
                                     value={p.name}
                                     maxLength={25}
                                     onChangeCapture={e => {

@@ -125,7 +125,7 @@ export default function Bidding() {
                 </div>
                 <div>Cards To Deal: {cardsThisHand}</div>
             </div>
-            <div className="flex w-full justify-center text-4xl mb-3">
+            <div className="flex w-full justify-center text-2xl mb-3">
                 Enter Player Bids
             </div>
 
@@ -140,7 +140,7 @@ export default function Bidding() {
                         }  m-2`}
                     >
                         <CardHeader>
-                            <CardTitle className="text-2xl">
+                            <CardTitle className="text-lg">
                                 {player.name}{" "}
                                 {playerIndex === dealerIndex ? "(dealer)" : ""}
                             </CardTitle>
@@ -151,7 +151,7 @@ export default function Bidding() {
                         </CardHeader>
                         <CardContent>
                             <div className="flex flex-row  w-full  justify-between">
-                                <div className="flex flex-col w-1/2 border-2 rounded-lg  justify-center text-6xl ">
+                                <div className="flex  w-1/2  bg-red-300 pl-5 align-baseline justify-center text-8xl ">
                                     {
                                         gameState.players[playerIndex]
                                             .roundScores[gameState.hand].bid
