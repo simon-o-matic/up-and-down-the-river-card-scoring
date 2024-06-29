@@ -31,13 +31,11 @@ export default function Home() {
     };
 
     const deletePlayer = (playerId: string) => {
-        console.log("delete playerid", playerId);
         if (gameState.players.length <= 2) {
             return;
         }
 
         const playerIndex = gameState.players.findIndex(p => p.id === playerId);
-        console.log("delete player index", playerIndex);
         gameState.players.splice(playerIndex, 1);
         gameState.updatePlayers(gameState.players);
     };
@@ -109,16 +107,16 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col h-full w-full ">
+        <div className="flex flex-col h-full w-full">
             <div className="mb-4">
                 <h4>Welcome to...</h4>
             </div>
 
-            <div className="flex flex-col  mb-10 ">
-                <div className="flex text-3xl  justify-center">
+            <div className="flex flex-col justify-center items-center mb-10">
+                <div className="flex text-3xl text-center">
                     Up And Down The River
                 </div>
-                <div className="flex text-xl justify-center">
+                <div className="flex text-xl text-center">
                     Card Game Scoring App
                 </div>
             </div>
@@ -168,14 +166,14 @@ export default function Home() {
                                 className="ml-3"
                                 onClick={() => deletePlayer(p.id)}
                             >
-                                X
+                                🗑
                             </Button>
                         </div>
                     </div>
                 </div>
             ))}
 
-            <div className="flex w-full justify-start my-3">
+            <div className="flex w-full justify-start my-1">
                 <Button
                     className="bg-gray-300 hover:bg-sky-400"
                     onClick={() => addPlayer()}
@@ -183,11 +181,8 @@ export default function Home() {
                     Add Player
                 </Button>
             </div>
-            <div className="flex justify-center mt-4">
-                <Button
-                    onClick={startFirstRound}
-                    className="h-10  bg-gray-300 hover:bg-sky-400 "
-                >
+            <div className="flex justify-center mt-5">
+                <Button onClick={startFirstRound} className="h-10 bg-sky-400 ">
                     Start The First Hand!
                 </Button>
             </div>

@@ -25,7 +25,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={cn(inter.className, "")}>
-                <div className="flex justify-center m-5 p-3  h-full border-black border-2 rounded-md">
+                <div className="flex justify-center h-full m-5 sm:p-3   border-black sm:border-2 sm:rounded-md">
                     {children}
                 </div>
             </body>
