@@ -201,9 +201,10 @@ export default function Bidding() {
                                 bid
                                 <div
                                     className={`flex align-baseline justify-center text-8xl mr-2 ${
+                                        playerIndex === dealerIndex &&
                                         dealerCantBidValue ===
-                                        gameState.players[playerIndex]
-                                            .roundScores[gameState.hand].bid
+                                            gameState.players[playerIndex]
+                                                .roundScores[gameState.hand].bid
                                             ? "text-gray-400"
                                             : ""
                                     }`}

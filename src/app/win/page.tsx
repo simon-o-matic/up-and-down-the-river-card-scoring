@@ -14,6 +14,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { calculatePlayerTotalScoreSoFar } from "@/lib/utils";
 
 /**
  * The bidding phase must be compled in order, and the last bidder has restrictions.
@@ -61,26 +62,6 @@ export default function Winning() {
         gameState.changeWon(gameState.hand, playerIndex, won - 1);
     };
 
-    const calculatePlayerTotalScoreSoFar = (playerIndex: number) => {
-        let total = 0;
-
-        for (let h = 0; h <= gameState.hand; h++) {
-            const playerBidWon = gameState.players[playerIndex].roundScores[h];
-
-            if (playerBidWon.bid === playerBidWon.won) {
-                if (playerBidWon.bid === 0) {
-                    total += gameState.config.pointsForCorrectZeroBid;
-                } else {
-                    total += gameState.config.pointsForCorrectNonZeroBid;
-                }
-            }
-
-            total += playerBidWon.won;
-        }
-
-        return total;
-    };
-
     // game reset, go back to the start
     if (gameState.handsUpRiver === 0) {
         router.replace("/");
@@ -104,44 +85,58 @@ export default function Winning() {
                 {gameState.players.map((player, playerIndex) => (
                     <Card
                         key={player.id}
-                        className={`w-min-[390px] [w-max-[400px] border-slate-900 border-2 m-2`}
+                        className={` w-[400px] border-slate-900 border-2 m-2`}
                     >
                         <CardHeader>
-                            <CardTitle className="text-2xl">
-                                {player.name}
+                            <CardTitle className="flex w-full justify-between text-lg">
+                                <div>{player.name} </div>
+                                <div>
+                                    score:{" "}
+                                    {calculatePlayerTotalScoreSoFar(
+                                        playerIndex,
+                                        gameState,
+                                        true
+                                    )}
+                                </div>
                             </CardTitle>
                             <CardDescription className="">
-                                How many tricks did this player win? They bid{" "}
-                                {player.roundScores[gameState.hand].bid}.
+                                How many tricks did this player win?
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex flex-row  w-full  justify-between">
-                                <div className="flex flex-col w-1/2 border-2 rounded-lg  justify-center text-6xl ">
+                            <div className="flex flex-row  w-full  justify-center">
+                                <div className="text-gray-400">
+                                    <div>bid</div>
+                                    <div
+                                        className={`flex align-baseline justify-center text-6xl mr-2`}
+                                    >
+                                        {
+                                            gameState.players[playerIndex]
+                                                .roundScores[gameState.hand].bid
+                                        }
+                                    </div>
+                                </div>
+                                won
+                                <div className="flex flex-col justify-center text-8xl ">
                                     {
                                         gameState.players[playerIndex]
                                             .roundScores[gameState.hand].won
                                     }
                                 </div>
-
-                                <div className="flex w-1/3 flex-col ">
+                                <div className="flex flex-col justify-around ml-2">
                                     <Button
+                                        className="mb-1 border bg-blue-400"
                                         onClick={() => upWon(playerIndex)}
-                                        className={`h-12 mb-1 border bg-gray-300}`}
                                     >
-                                        up
+                                        ↑
                                     </Button>
                                     <Button
                                         onClick={() => downWon(playerIndex)}
-                                        className={`h-12 mt-1 border bg-gray-300}`}
+                                        className={`mt-1 border bg-blue-400`}
                                     >
-                                        down
+                                        ↓
                                     </Button>
                                 </div>
-                            </div>
-                            <div>
-                                TOTAL SCORE:{" "}
-                                {calculatePlayerTotalScoreSoFar(playerIndex)}
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-right"></CardFooter>
@@ -149,9 +144,14 @@ export default function Winning() {
                 ))}
             </div>
 
-            <Button onClick={nextHand} className="max-w-64">
-                {isLastHand() ? "View Final Scores" : "Start Next Hand"}
-            </Button>
+            <div className="flex flex-wrap w-full  justify-center">
+                <Button
+                    onClick={nextHand}
+                    className="max-w-64 bg-blue-400 my-3 just"
+                >
+                    {isLastHand() ? "View Final Scores" : "Start Next Hand"}
+                </Button>
+            </div>
         </div>
     );
 }
