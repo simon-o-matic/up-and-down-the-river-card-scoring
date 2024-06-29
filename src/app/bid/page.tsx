@@ -14,6 +14,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { calculatePlayerTotalScoreSoFar } from "@/lib/utils";
 
 /** how many cards are dealt this hand - calculated once */
 let cardsThisHand = 0;
@@ -140,9 +141,21 @@ export default function Bidding() {
                         }  m-2`}
                     >
                         <CardHeader>
-                            <CardTitle className="text-lg">
-                                {player.name}{" "}
-                                {playerIndex === dealerIndex ? "(dealer)" : ""}
+                            <CardTitle className="flex w-full justify-between text-lg">
+                                <div>
+                                    {player.name}{" "}
+                                    {playerIndex === dealerIndex
+                                        ? "(dealer)"
+                                        : ""}
+                                </div>
+                                <div>
+                                    score:{" "}
+                                    {calculatePlayerTotalScoreSoFar(
+                                        playerIndex,
+                                        gameState,
+                                        false
+                                    )}
+                                </div>
                             </CardTitle>
                             <CardDescription>
                                 How many tricks does this player think they can
@@ -151,13 +164,13 @@ export default function Bidding() {
                         </CardHeader>
                         <CardContent>
                             <div className="flex flex-row  w-full justify-center">
+                                bid
                                 <div className="flex align-baseline justify-center text-8xl mr-2 ">
                                     {
                                         gameState.players[playerIndex]
                                             .roundScores[gameState.hand].bid
                                     }
                                 </div>
-
                                 <div className="flex flex-col justify-around ml-2">
                                     <Button
                                         onClick={
@@ -203,7 +216,7 @@ export default function Bidding() {
                                             : "bg-gray-300"
                                     } ${
                                         playerIndex === dealerIndex
-                                            ? "border-black border-2 bg-red-600"
+                                            ? "bg-red-600"
                                             : ""
                                     }`}
                                     onClick={() =>

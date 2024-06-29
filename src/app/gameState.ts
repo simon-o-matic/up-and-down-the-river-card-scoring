@@ -15,7 +15,7 @@ export type Player = {
 
 const initialPlayers: Player[] = [];
 
-type GameState = {
+export type GameState = {
     players: Player[];
     hand: number;
     handsUpRiver: number;
