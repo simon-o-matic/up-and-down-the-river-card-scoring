@@ -91,6 +91,10 @@ export default function Home() {
             );
         } else if (hands <= 0 || hands > 26) {
             alert("Thats not a reasonable number of hands to play. Try again.");
+        } else if (
+            gameState.players.filter(p => p.name.trim().length > 0).length < 2
+        ) {
+            alert("You need at least two players to play");
         } else {
             gameState.setHandsUpRiver(hands);
             gameState.updatePlayers(
