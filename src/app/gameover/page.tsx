@@ -8,9 +8,6 @@ import { useGameState, Player } from "../gameState";
 import { Button } from "@/components/ui/button";
 import { calculatePlayerTotalScoreSoFar, toPosition } from "@/lib/utils";
 
-/** how many cards are dealt this hand - calculated once */
-let cardsThisHand = 0;
-
 /**
  * The bidding phase must be compled in order, and the last bidder has restrictions.
  * The last bidder is always the dealer! How convenient.
