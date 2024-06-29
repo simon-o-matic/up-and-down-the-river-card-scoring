@@ -38,14 +38,33 @@ export default function Bidding() {
     const [currentBidderPlayerIndex, setCurrentBidderPlayerIndex] =
         React.useState(-1);
 
-    /** value of the current bid */
+    /** sum of all bids. Used to limit dealers bid options */
+    //const [totalBids, setTotalBids] = React.useState(0);
+
+    /** player who is dealer */
     const [dealerIndex, setDealerIndex] = React.useState(0);
+
+    // helper to limit what the dealer can bid
+    const totalBidValue = gameState.players.reduce(
+        (acc, p, i) =>
+            acc + (i === dealerIndex ? 0 : p.roundScores[gameState.hand].bid),
+        0
+    );
+
+    const dealerCantBidValue =
+        gameState.hand + 1 - totalBidValue >= 0
+            ? gameState.hand + 1 - totalBidValue
+            : -1;
 
     const upBid = () => {
         const currentBid =
             gameState.players[currentBidderPlayerIndex].roundScores[
                 gameState.hand
             ].bid;
+
+        if (currentBid === gameState.hand + 1) {
+            return;
+        }
 
         gameState.changeBid(
             gameState.hand,
@@ -70,6 +89,15 @@ export default function Bidding() {
     };
 
     const submitBid = (isFinal: boolean = false) => {
+        // validate the bid
+        if (isFinal) {
+            const currentBid =
+                gameState.players[currentBidderPlayerIndex].roundScores[
+                    gameState.hand
+                ].bid;
+            if (currentBid === dealerCantBidValue) return;
+        }
+
         // move to the next player to bid
         setCurrentBidderPlayerIndex(
             (currentBidderPlayerIndex + 1) % gameState.players.length
@@ -130,11 +158,11 @@ export default function Bidding() {
                 Enter Player Bids
             </div>
 
-            <div className="flex flex-wrap w-full  justify-center">
+            <div className="flex flex-wrap w-full justify-center">
                 {gameState.players.map((player, playerIndex) => (
                     <Card
                         key={player.id}
-                        className={`w-min-[390px] [w-max-[400px] ${
+                        className={`w-[390px]  ${
                             playerIndex === currentBidderPlayerIndex
                                 ? "border-blue-700 border-4"
                                 : "border-slate-900 border-2"
@@ -157,15 +185,29 @@ export default function Bidding() {
                                     )}
                                 </div>
                             </CardTitle>
-                            <CardDescription>
+                            <CardDescription className="w-50">
                                 How many tricks does this player think they can
-                                win?
+                                win?{" "}
+                                {playerIndex === dealerIndex &&
+                                playerIndex === currentBidderPlayerIndex
+                                    ? dealerCantBidValue < 0
+                                        ? "Any bid is fine."
+                                        : "Can't bid " + dealerCantBidValue
+                                    : ""}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div className="flex flex-row  w-full justify-center">
                                 bid
-                                <div className="flex align-baseline justify-center text-8xl mr-2 ">
+                                <div
+                                    className={`flex align-baseline justify-center text-8xl mr-2 ${
+                                        dealerCantBidValue ===
+                                        gameState.players[playerIndex]
+                                            .roundScores[gameState.hand].bid
+                                            ? "text-gray-400"
+                                            : ""
+                                    }`}
+                                >
                                     {
                                         gameState.players[playerIndex]
                                             .roundScores[gameState.hand].bid

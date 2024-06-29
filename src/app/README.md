@@ -13,12 +13,13 @@ Dealer always starts with the first player and rotates
 # TODOs
 
 -   end game
--   bidding: add final bid number restriction
 -   wining: put in check for total number won (=== cards in hand) with error message
 -   create an EDIT page to fix past scores
 -   winning page: flash clicked button red if not valid to click it (max points given out)
 -   github and vercel publish
 -   top level menu with naviation (cancel game, edit scores,)
+-   google analytics
+-   X bidding: add final bid number restriction
 -   X remove player
 -   X can't play with only one player
 -   X tell each player during bidding how far behind the next person/leader they are
