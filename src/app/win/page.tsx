@@ -31,7 +31,19 @@ export default function Winning() {
     const isLastHand = () =>
         gameState.hand + 1 === gameState.handsUpRiver * 2 - 1;
 
+    const calculateTricksWon = () =>
+        gameState.players.reduce(
+            (acc, p) => acc + p.roundScores[gameState.hand].won,
+            0
+        );
+
     const nextHand = () => {
+        // check for correct number of tricks won
+        if (calculateTricksWon() !== gameState.hand + 1) {
+            alert("The number of tricks won doesn't add up!");
+            return;
+        }
+
         if (isLastHand()) {
             router.replace("/gameover");
         } else {
