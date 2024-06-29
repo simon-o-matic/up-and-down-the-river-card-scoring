@@ -123,7 +123,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="flex flex-col  text-xl mb-2">
+            <div className="flex flex-col text-xl mb-2">
                 How many hands up the river?
             </div>
 
@@ -131,7 +131,7 @@ export default function Home() {
                 id="hands"
                 defaultValue="7"
                 className="col-span-2 h-10 w-20 mb-6"
-                onChangeCapture={e => {
+                onChange={e => {
                     setHandsUpRiver(e.currentTarget.value);
                 }}
             />
@@ -151,7 +151,7 @@ export default function Home() {
                                     className="max-w-60"
                                     value={p.name}
                                     maxLength={25}
-                                    onChangeCapture={e => {
+                                    onChange={e => {
                                         setPlayerName(i, e.currentTarget.value);
                                     }}
                                 />
@@ -186,7 +186,7 @@ export default function Home() {
             <div className="flex justify-center mt-4">
                 <Button
                     onClick={startFirstRound}
-                    className="h-10 w-2/3 bg-gray-300 hover:bg-sky-400 "
+                    className="h-10  bg-gray-300 hover:bg-sky-400 "
                 >
                     Start The First Hand!
                 </Button>
