@@ -175,7 +175,7 @@ export default function Home() {
                 </div>
             ))}
 
-            <div className="flex w-full justify-end my-3">
+            <div className="flex w-full justify-start my-3">
                 <Button
                     className="bg-gray-300 hover:bg-sky-400"
                     onClick={() => addPlayer()}
@@ -183,7 +183,7 @@ export default function Home() {
                     Add Player
                 </Button>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-4">
                 <Button
                     onClick={startFirstRound}
                     className="h-10 w-2/3 bg-gray-300 hover:bg-sky-400 "

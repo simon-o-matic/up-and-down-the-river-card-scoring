@@ -125,7 +125,7 @@ export default function Bidding() {
                 </div>
                 <div>Cards To Deal: {cardsThisHand}</div>
             </div>
-            <div className="flex w-full justify-center text-2xl mb-3">
+            <div className="flex w-full justify-center text-4xl mb-3">
                 Enter Player Bids
             </div>
 
@@ -150,15 +150,15 @@ export default function Bidding() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex flex-row  w-full  justify-between">
-                                <div className="flex  w-1/2  bg-red-300 pl-5 align-baseline justify-center text-8xl ">
+                            <div className="flex flex-row  w-full justify-center">
+                                <div className="flex align-baseline justify-center text-8xl mr-2 ">
                                     {
                                         gameState.players[playerIndex]
                                             .roundScores[gameState.hand].bid
                                     }
                                 </div>
 
-                                <div className="flex w-1/3 flex-col ">
+                                <div className="flex flex-col justify-around ml-2">
                                     <Button
                                         onClick={
                                             playerIndex ==
@@ -166,14 +166,14 @@ export default function Bidding() {
                                                 ? upBid
                                                 : undefined
                                         }
-                                        className={`h-12 mb-1 border ${
+                                        className={`mb-1 border ${
                                             playerIndex ===
                                             currentBidderPlayerIndex
                                                 ? "bg-blue-400"
                                                 : "bg-gray-300"
                                         }`}
                                     >
-                                        up
+                                        ↑
                                     </Button>
                                     <Button
                                         onClick={
@@ -182,27 +182,36 @@ export default function Bidding() {
                                                 ? downBid
                                                 : undefined
                                         }
-                                        className={`h-12 mt-1 border ${
+                                        className={`mt-1 border ${
                                             playerIndex ===
                                             currentBidderPlayerIndex
                                                 ? "bg-blue-400"
                                                 : "bg-gray-300"
                                         }`}
                                     >
-                                        down
+                                        ↓
                                     </Button>
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="flex justify-right">
+                        <CardFooter className="flex w-full justify-center ">
                             {playerIndex == currentBidderPlayerIndex ? (
                                 <Button
+                                    className={`w-40 ${
+                                        playerIndex === currentBidderPlayerIndex
+                                            ? "bg-blue-400"
+                                            : "bg-gray-300"
+                                    } ${
+                                        playerIndex === dealerIndex
+                                            ? "border-black border-2 bg-red-600"
+                                            : ""
+                                    }`}
                                     onClick={() =>
                                         submitBid(playerIndex === dealerIndex)
                                     }
                                 >
                                     {playerIndex === dealerIndex ? (
-                                        <div className="font-bold text-blue-700">
+                                        <div className="font-bold text-white ">
                                             Submit Final Bid
                                         </div>
                                     ) : (
@@ -210,7 +219,9 @@ export default function Bidding() {
                                     )}
                                 </Button>
                             ) : (
-                                <Button className="italic">Wait turn</Button>
+                                <Button className="w-40 bg-gray-300 italic">
+                                    Wait
+                                </Button>
                             )}
                         </CardFooter>
                     </Card>
