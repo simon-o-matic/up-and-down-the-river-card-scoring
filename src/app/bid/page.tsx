@@ -98,14 +98,14 @@ export default function Bidding() {
             if (currentBid === dealerCantBidValue) return;
         }
 
+        if (isFinal) {
+            router.replace("/win");
+        }
+
         // move to the next player to bid
         setCurrentBidderPlayerIndex(
             (currentBidderPlayerIndex + 1) % gameState.players.length
         );
-
-        if (isFinal) {
-            router.replace("/win");
-        }
     };
 
     // TODO: which bid are we not allowed?
