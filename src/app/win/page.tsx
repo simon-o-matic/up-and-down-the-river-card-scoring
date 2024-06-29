@@ -82,14 +82,20 @@ export default function Winning() {
 
     return (
         <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between text-1xl mb-3 ">
-                <div>
-                    Hand: {gameState.hand + 1} /{" "}
-                    {gameState.handsUpRiver * 2 - 1}
+            <div className="flex w-full justify-between text-xl mb-3">
+                <div className="flex flex-row flex-nowrap items-baseline ">
+                    <div className="mr-1">Hand: </div>{" "}
+                    <div>{gameState.hand + 1}</div>
+                    <div className="text-xs align-bottom">
+                        /{gameState.handsUpRiver * 2 - 1}
+                    </div>
                 </div>
-                <div>Cards Dealt: {cardsThisHand}</div>
+                <div className="flex text-right">
+                    Cards To Deal: {cardsThisHand}
+                </div>
             </div>
-            <div className="flex w-full justify-center text-4xl mb-3">
+
+            <div className="flex w-full justify-center items-center text-center text-3xl">
                 Enter Tricks Won
             </div>
 

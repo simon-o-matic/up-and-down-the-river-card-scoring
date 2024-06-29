@@ -148,13 +148,16 @@ export default function Bidding() {
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full justify-between text-xl mb-3 ">
-                <div>
-                    Hand: {gameState.hand + 1} /{" "}
-                    {gameState.handsUpRiver * 2 - 1}
+                <div className="flex flex-row items-baseline align-bottom">
+                    <div>Hand: {gameState.hand + 1}</div>
+                    <div className="text-xs">
+                        /{gameState.handsUpRiver * 2 - 1}
+                    </div>
                 </div>
                 <div>Cards To Deal: {cardsThisHand}</div>
             </div>
-            <div className="flex w-full justify-center text-4xl mb-3">
+
+            <div className="flex w-full justify-center text-center text-3xl">
                 Enter Player Bids
             </div>
 
