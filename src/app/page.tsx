@@ -146,7 +146,7 @@ export default function Home() {
                             <div>
                                 <Input
                                     id={String(i)}
-                                    className="max-w-60"
+                                    className="max-w-60 text-base"
                                     value={p.name}
                                     maxLength={25}
                                     onChange={e => {
