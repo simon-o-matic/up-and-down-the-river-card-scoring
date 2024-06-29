@@ -72,7 +72,8 @@ export default function GameOver() {
                                     {calculatePlayerTotalScoreSoFar(
                                         gameState.players.findIndex(
                                             p => p.id === player.id
-                                        )
+                                        ),
+                                        gameState
                                     )}
                                 </div>
                             </div>
