@@ -147,7 +147,7 @@ export default function Bidding() {
 
     return (
         <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between text-2xl mb-3 ">
+            <div className="flex w-full justify-between text-xl mb-3 ">
                 <div>
                     Hand: {gameState.hand + 1} /{" "}
                     {gameState.handsUpRiver * 2 - 1}
@@ -162,7 +162,7 @@ export default function Bidding() {
                 {gameState.players.map((player, playerIndex) => (
                     <Card
                         key={player.id}
-                        className={`w-[390px]  ${
+                        className={`max-w-[390px]  ${
                             playerIndex === currentBidderPlayerIndex
                                 ? "border-blue-700 border-4"
                                 : "border-slate-900 border-2"

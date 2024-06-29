@@ -82,7 +82,7 @@ export default function Winning() {
 
     return (
         <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between text-2xl mb-3 ">
+            <div className="flex w-full justify-between text-1xl mb-3 ">
                 <div>
                     Hand: {gameState.hand + 1} /{" "}
                     {gameState.handsUpRiver * 2 - 1}

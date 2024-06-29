@@ -130,7 +130,7 @@ export default function Home() {
             <Input
                 id="hands"
                 defaultValue="7"
-                className="col-span-2 h-10 w-20 mb-6"
+                className="col-span-2 h-10 w-20 mb-6 text-base"
                 onChange={e => {
                     setHandsUpRiver(e.currentTarget.value);
                 }}

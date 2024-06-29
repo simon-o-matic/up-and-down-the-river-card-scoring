@@ -12,7 +12,10 @@ Dealer always starts with the first player and rotates
 
 # TODOs
 
--   github and vercel publish
+-   X github and vercel publish
+-   add config of scores
+-   color winning button when invalide
+-   change text of winning button to "Start Round X"
 -   reset game on refresh
 -   create an EDIT page to fix past scores
 -   google analytics
