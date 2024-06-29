@@ -14,15 +14,15 @@ Dealer always starts with the first player and rotates
 
 -   end game
 -   bidding: add final bid number restriction
--   wiining: put in check for total number won (=== cards in hand) with error message
--   tell each player during bidding how far behind the next person/leader they are
--   Bid page. "wait turn" after bidding should be "done"
+-   wining: put in check for total number won (=== cards in hand) with error message
 -   create an EDIT page to fix past scores
 -   winning page: flash clicked button red if not valid to click it (max points given out)
 -   github and vercel publish
 -   top level menu with naviation (cancel game, edit scores,)
--   remove player
--   can't play with only one player
+-   X remove player
+-   X can't play with only one player
+-   X tell each player during bidding how far behind the next person/leader they are
+-   X Bid page. "wait turn" after bidding should be "done" - Made it "wait" instead, too hard
 
 # Future idea
 
