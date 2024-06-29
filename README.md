@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# config
 
-## Getting Started
+How many rounds up the river (half the total rounds)
+player list
+how many points to bid zero (default: 10)
+how many points to get your bid (fixed: 10)
+add a point for trick won (default: yes)
 
-First, run the development server:
+# Dealer
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Dealer always starts with the first player and rotates
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# TODOs
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   github and vercel publish
+-   reset game on refresh
+-   create an EDIT page to fix past scores
+-   google analytics
+-   top level menu with naviation (cancel game, edit scores,)
+-   X end game
+-   X wining: put in check for total number won (=== cards in hand) with error message
+-   X bidding: add final bid number restriction
+-   X remove player
+-   X can't play with only one player
+-   X tell each player during bidding how far behind the next person/leader they are
+-   X Bid page. "wait turn" after bidding should be "done" - Made it "wait" instead, too hard
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# Future idea
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+All players notified of changes to the game.
+Chat
+Observers
+Select your own name
+Players can view existing bids on the app
