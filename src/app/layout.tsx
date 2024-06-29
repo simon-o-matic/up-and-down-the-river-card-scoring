@@ -6,8 +6,9 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Up And Down The River",
-    description: "By Shimmie",
+    title: "Up And Down The River Card Game",
+    description:
+        "A card scoring app for the game Up And Down The River. Makes it very easy to keep track of who's bidding what, how many tricks they won, and what is there total score. Supports multiple scoring options By Shimmie, 2024",
     viewport: {
         width: "device-width",
         initialScale: 1,
@@ -22,8 +23,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={cn(inter.className, "flex justify-center ")}>
-                <div className="m-5 p-3 w-full h-full border-black border-2 rounded-md">
+            <body className={cn(inter.className, "")}>
+                <div className="flex justify-center m-5 p-3  h-full border-black border-2 rounded-md">
                     {children}
                 </div>
             </body>
